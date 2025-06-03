@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +42,8 @@ const NavBar: React.FC = () => {
           </span>
         </div>
         <div style={styles.right}>
-          {navLinks.map((link) => {
+          <ThemeToggle />
+        {navLinks.map((link) => {
             const isActive = location.pathname === link.path;
             return (
               <motion.div
