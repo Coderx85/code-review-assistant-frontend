@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import NavBar from "../components/NavBar";
+import { useTheme } from "../hook/useTheme";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const name = localStorage.getItem("name") || "User";
+  const { isDark } = useTheme();
+
+  const styles = getStyles(isDark);
 
   const handleGetStarted = () => {
     navigate("/review");
@@ -44,37 +48,40 @@ const Home: React.FC = () => {
   );
 };
 
-const styles = {
+const getStyles = (isDark: boolean) => ({
   container: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as const,
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
     width: "100vw",
-    background: "linear-gradient(to bottom right, #2c3e50, #34495e)",
+    background: isDark 
+      ? "linear-gradient(to bottom right, #2c3e50, #34495e)"
+      : "linear-gradient(to bottom right, #f8fafc, #e2e8f0)",
     fontFamily: "'Playfair Display', serif",
-    textAlign: "center",
+    textAlign: "center" as const,
     margin: 0,
-    position: "relative",
+    position: "relative" as const,
     paddingTop: "70px",
-    boxSizing: "border-box",
-  } as React.CSSProperties,
+    boxSizing: "border-box" as const,
+    transition: "all 0.3s ease",
+  },
   headerContainer: {
     marginBottom: "40px",
   },
   heading: {
     fontSize: "36px",
-    color: "#fff",
+    color: isDark ? "#fff" : "#1f2937",
     marginBottom: "10px",
     paddingBottom: "10px",
     fontWeight: "700",
     overflow: "hidden",
-    whiteSpace: "nowrap",
+    whiteSpace: "nowrap" as const,
   },
   subheading: {
     fontSize: "18px",
-    color: "#fff",
+    color: isDark ? "#fff" : "#374151",
     lineHeight: "1.5",
     maxWidth: "500px",
     margin: "0 auto",
@@ -96,42 +103,29 @@ const styles = {
     transform: "scale(1.1)",
     boxShadow: "0 0 15px rgba(22, 160, 133, 1)",
   },
-  logoutButton: {
-    position: "absolute" as "absolute",
-    top: "20px",
-    right: "20px",
-    backgroundColor: "#E74C3C",
-    color: "#fff",
-    fontSize: "13px",
-    padding: "12px 24px",
-    border: "none",
-    borderRadius: "30px",
-    cursor: "pointer",
-    transition: "background-color 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease",
-    boxShadow: "0 0 10px rgba(231, 76, 60, 0.8)",
-  },
-  logoutButtonHovered: {
-    backgroundColor: "#C0392B",
-    transform: "scale(1.1)",
-    boxShadow: "0 0 15px rgba(192, 57, 43, 1)",
-  },
   footer: {
-    position: "absolute" as "absolute",
+    position: "absolute" as const,
     bottom: "10px",
     width: "100%",
-    textAlign: "center" as "center",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    textAlign: "center" as const,
+    backgroundColor: isDark 
+      ? "rgba(255, 255, 255, 0.05)" 
+      : "rgba(0, 0, 0, 0.05)",
     padding: "10px 0",
-    borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+    borderTop: isDark 
+      ? "1px solid rgba(255, 255, 255, 0.1)"
+      : "1px solid rgba(0, 0, 0, 0.1)",
     backdropFilter: "blur(4px)",
-    boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.2)",
+    boxShadow: isDark 
+      ? "0 -2px 10px rgba(0, 0, 0, 0.2)"
+      : "0 -2px 10px rgba(0, 0, 0, 0.1)",
   },
   copyright: {
     fontSize: "14px",
-    color: "#fff",
+    color: isDark ? "#fff" : "#6b7280",
     margin: "0",
   },
-};
+});
 
 const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
   const [displayedText, setDisplayedText] = useState("");

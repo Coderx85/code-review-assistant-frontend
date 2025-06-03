@@ -14,10 +14,14 @@ import {
     Blocks,
 } from "lucide-react";
 import { useInView } from "framer-motion";
+import { useTheme } from "../hook/useTheme";
 
 const About: React.FC = () => {
     const navigate = useNavigate();
     const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null);
+    const { isDark } = useTheme();
+
+    const styles = getStyles(isDark);
 
     const handleTryNow = () => {
         navigate("/review");
@@ -99,7 +103,7 @@ const About: React.FC = () => {
                 </ReactTooltip>
 
                 {/* -----------------HORIZONTAL DIVIDER----------------- */}
-                <hr className="my-8 border-gray-400" />
+                <div className={`my-8 border-t ${isDark ? 'border-gray-600' : 'border-gray-400'}`} />
 
                 {/* KEY FEATURES */}
                 <h2 style={styles.heading}>Key Features</h2>
@@ -112,32 +116,31 @@ const About: React.FC = () => {
                     <div style={styles.featuresCard}>
                         <ul style={styles.featuresList}>
                             <li>
-                                <strong style={{ color: "#1abc9c" }}>Instant Code Analysis:</strong>
+                                <strong style={{ color: isDark ? "#1abc9c" : "#16a085" }}>Instant Code Analysis:</strong>
                                 <p>Paste your code and receive instant, detailed feedback powered by AI.</p>
                             </li>
                             <li>
-                                <strong style={{ color: "#1abc9c" }}>Multi-Language Support:</strong>
+                                <strong style={{ color: isDark ? "#1abc9c" : "#16a085" }}>Multi-Language Support:</strong>
                                 <p>Java, JavaScript, Python, and more to come.</p>
                             </li>
                             <li>
-                                <strong style={{ color: "#1abc9c" }}>Best Practices Guide:</strong>
+                                <strong style={{ color: isDark ? "#1abc9c" : "#16a085" }}>Best Practices Guide:</strong>
                                 <p>Learn the reasoning behind each suggestion.</p>
                             </li>
                             <li>
-                                <strong style={{ color: "#1abc9c" }}>Modern Stack Integration:</strong>
+                                <strong style={{ color: isDark ? "#1abc9c" : "#16a085" }}>Modern Stack Integration:</strong>
                                 <p>Built with Spring Boot for performance and React for a smooth user experience.</p>
                             </li>
                             <li>
-                                <strong style={{ color: "#1abc9c" }}>Secure & Private:</strong>
+                                <strong style={{ color: isDark ? "#1abc9c" : "#16a085" }}>Secure & Private:</strong>
                                 <p>Your code stays safe — no unwanted sharing or data retention.</p>
                             </li>
                         </ul>
-                    </div>
-                </motion.div>
+                    </div>                </motion.div>
 
 
                 {/* -----------------HORIZONTAL DIVIDER----------------- */}
-                <hr className="my-8 border-gray-400" />
+                <hr className={`my-8 ${isDark ? 'border-gray-600' : 'border-gray-400'}`} />
 
                 {/* APP PREVIEWS CAROUSEL*/}
                 <h2 style={styles.heading}>In-App Previews</h2>
@@ -289,11 +292,10 @@ const About: React.FC = () => {
                         >
                             Start your first review
                         </motion.button>
-                    </div>
-                </motion.div>
+                    </div>                </motion.div>
 
                 {/* -----------------HORIZONTAL DIVIDER----------------- */}
-                <hr className="my-8 border-gray-400" />
+                <hr className={`my-8 ${isDark ? 'border-gray-600' : 'border-gray-400'}`} />
 
                 {/* CREATOR SECTION */}
                 <h2 style={styles.heading}>✨ Meet the Creator ✨</h2>
@@ -333,7 +335,7 @@ const About: React.FC = () => {
     );
 };
 
-const styles = {
+const getStyles = (isDark: boolean) => ({
     container: {
         display: "flex",
         flexDirection: "column" as const,
@@ -341,9 +343,11 @@ const styles = {
         justifyContent: "flex-start",
         minHeight: "100vh",
         width: "100vw",
-        background: "linear-gradient(to right, #2c3e50, #34495e)",
+        background: isDark 
+            ? "linear-gradient(to right, #2c3e50, #34495e)" 
+            : "linear-gradient(to right, #f8f9fa, #e9ecef)",
         fontFamily: "'Playfair Display', serif",
-        color: "#ecf0f1",
+        color: isDark ? "#ecf0f1" : "#2c3e50",
         paddingTop: "70px",
         boxSizing: "border-box" as const,
         overflowX: "hidden",
@@ -369,15 +373,15 @@ const styles = {
         lineHeight: "1.6",
         marginBottom: "20px",
         textAlign: "justify" as const,
-    },
-
-    creatorCard: {
+    },    creatorCard: {
         display: "flex",
         alignItems: "center",
-        backgroundColor: "#2f3640",
+        backgroundColor: isDark ? "#2f3640" : "#ffffff",
         padding: "20px",
         borderRadius: "1rem",
-        boxShadow: "0 8px 16px rgba(0, 0, 0, 0.25)",
+        boxShadow: isDark 
+            ? "0 8px 16px rgba(0, 0, 0, 0.25)" 
+            : "0 8px 16px rgba(0, 0, 0, 0.1)",
         marginBottom: "60px",
         flexWrap: "wrap" as const,
         gap: "20px",
@@ -401,11 +405,9 @@ const styles = {
         fontWeight: "bold",
         color: "#1abc9c",
         marginBottom: "8px",
-    } as React.CSSProperties,
-
-    creatorBio: {
+    } as React.CSSProperties,    creatorBio: {
         fontSize: "15px",
-        color: "#ecf0f1",
+        color: isDark ? "#ecf0f1" : "#495057",
         marginBottom: "8px",
         lineHeight: 1.6,
     } as React.CSSProperties,
@@ -425,13 +427,13 @@ const styles = {
         gap: "20px",
         width: "100%",
         marginBottom: "60px",
-    } as React.CSSProperties,
-
-    featureCard: {
-        backgroundColor: "#2f3640",
+    } as React.CSSProperties,    featureCard: {
+        backgroundColor: isDark ? "#2f3640" : "#ffffff",
         padding: "20px",
         borderRadius: "1rem",
-        boxShadow: "0 8px 16px rgba(0, 0, 0, 0.25)",
+        boxShadow: isDark 
+            ? "0 8px 16px rgba(0, 0, 0, 0.25)" 
+            : "0 8px 16px rgba(0, 0, 0, 0.1)",
         textAlign: "center" as const,
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
     } as React.CSSProperties,
@@ -446,11 +448,9 @@ const styles = {
         fontSize: "18px",
         fontWeight: "bold",
         marginBottom: "8px",
-    } as React.CSSProperties,
-
-    cardText: {
+    } as React.CSSProperties,    cardText: {
         fontSize: "15px",
-        color: "#ecf0f1",
+        color: isDark ? "#ecf0f1" : "#495057",
         lineHeight: 1.5,
     } as React.CSSProperties,
 
@@ -465,56 +465,52 @@ const styles = {
         display: "inline-block",
         verticalAlign: "middle",
         marginRight: "4px",
-    },
-
-    comingSoonText: {
+    },    comingSoonText: {
         marginTop: "6px",
         marginLeft: "26px",
         fontSize: "15px",
-        color: "#ecf0f1",
+        color: isDark ? "#ecf0f1" : "#495057",
         lineHeight: 1.5,
     },
-
-
     comingSoonCard: {
-        backgroundColor: "#2f3640",
+        backgroundColor: isDark ? "#2f3640" : "#ffffff",
         padding: "24px",
         borderRadius: "1rem",
-        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.3)",
+        boxShadow: isDark 
+            ? "0 10px 20px rgba(0, 0, 0, 0.3)" 
+            : "0 10px 20px rgba(0, 0, 0, 0.1)",
         marginBottom: "40px",
-    } as React.CSSProperties,
-
-    comingSoonList: {
+    } as React.CSSProperties,    comingSoonList: {
         lineHeight: 1.6,
         fontSize: "16px",
         listStyleType: "disc",
         paddingLeft: "20px",
-        color: "#ecf0f1",
+        color: isDark ? "#ecf0f1" : "#495057",
     } as React.CSSProperties,
-
-
     carouselWrapper: {
         width: "100%",
         maxWidth: "800px",
         margin: "0 auto 40px auto",
         borderRadius: "12px",
         overflow: "hidden",
-        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
+        boxShadow: isDark 
+            ? "0 8px 24px rgba(0, 0, 0, 0.3)" 
+            : "0 8px 24px rgba(0, 0, 0, 0.15)",
     },
 
 
     accordionWrapper: {
         width: "100%",
         marginBottom: "40px",
-    },
-
-    accordionItem: {
-        backgroundColor: "#2f3640",
-        color: "#ecf0f1",
+    },    accordionItem: {
+        backgroundColor: isDark ? "#2f3640" : "#ffffff",
+        color: isDark ? "#ecf0f1" : "#495057",
         borderRadius: "8px",
         marginBottom: "10px",
         overflow: "hidden",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+        boxShadow: isDark 
+            ? "0 4px 8px rgba(0,0,0,0.2)" 
+            : "0 4px 8px rgba(0,0,0,0.1)",
     },
 
     accordionTitle: {
@@ -525,21 +521,19 @@ const styles = {
         cursor: "pointer",
         color: "#1abc9c",
         fontSize: "16px",
-    },
-
-    accordionContent: {
+    },    accordionContent: {
         padding: "0 16px 16px 16px",
         fontSize: "15px",
         lineHeight: "1.5",
-        color: "#ecf0f1",
+        color: isDark ? "#ecf0f1" : "#495057",
     },
-
-
     featuresCard: {
-        backgroundColor: "#2f3640",
+        backgroundColor: isDark ? "#2f3640" : "#ffffff",
         padding: "24px",
         borderRadius: "1rem",
-        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.3)",
+        boxShadow: isDark 
+            ? "0 10px 20px rgba(0, 0, 0, 0.3)" 
+            : "0 10px 20px rgba(0, 0, 0, 0.1)",
         marginBottom: "40px",
     } as React.CSSProperties,
 
@@ -569,6 +563,6 @@ const styles = {
         cursor: "pointer",
         transition: "background-color 0.3s ease",
     } as React.CSSProperties,
-};
+});
 
 export default About;
