@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import NavBar from "../components/NavBar";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import { useTheme } from "../hook/useTheme";
 import "../App.css"
 
 const Contact: React.FC = () => {
@@ -9,6 +10,9 @@ const Contact: React.FC = () => {
     const [submitted, setSubmitted] = useState(false);
     const [emailError, setEmailError] = useState("");
     const [loading, setLoading] = useState(false);
+    const { isDark } = useTheme();
+
+    const styles = getStyles(isDark);
 
     const validateEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,11 +48,10 @@ const Contact: React.FC = () => {
                 {
                     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY!,
                 }
-            )
-            .then(
+            )            .then(
                 () => {
-                    setSubmitted(true),
-                        setLoading(false);
+                    setSubmitted(true);
+                    setLoading(false);
                 },
                 (error) => {
                     console.error("FAILED...", error.text);
@@ -156,12 +159,15 @@ const Contact: React.FC = () => {
     );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
+const getStyles = (isDark: boolean) => ({
     pageWrapper: {
         paddingTop: "80px",
-        background: "linear-gradient(to bottom right, #2c3e50, #34495e)",
+        background: isDark 
+            ? "linear-gradient(to bottom right, #1a1a1a, #2d2d2d)" 
+            : "linear-gradient(to bottom right, #f8f9fa, #e9ecef)",
         minHeight: "100vh",
         minWidth: "100vw",
+        transition: "all 0.3s ease",
     },
     container: {
         display: "flex",
@@ -170,94 +176,103 @@ const styles: { [key: string]: React.CSSProperties } = {
         padding: "40px 20px",
     },
     card: {
-        background: "#2b3333",
+        background: isDark ? "#2f3640" : "#ffffff",
         padding: "30px",
         borderRadius: "12px",
         width: "100%",
         maxWidth: "500px",
-        color: "#fff",
-        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
+        color: isDark ? "#ecf0f1" : "#2c3e50",
+        boxShadow: isDark 
+            ? "0 8px 24px rgba(0, 0, 0, 0.25)" 
+            : "0 8px 24px rgba(0, 0, 0, 0.1)",
         marginTop: "50px",
-    },
+        border: isDark ? "none" : "1px solid #e9ecef",
+        transition: "all 0.3s ease",
+    } as React.CSSProperties,
     heading: {
         fontSize: "28px",
         fontWeight: "bold",
         marginBottom: "10px",
-        textAlign: "center",
+        textAlign: "center" as const,
         fontFamily: "'Playfair Display', serif",
         marginTop: "10px",
-        color: "#1abc9c",
+        color: isDark ? "#1abc9c" : "#16a085",
     },
     subHeading: {
         fontSize: "15px",
-        color: "#ccc",
+        color: isDark ? "#bdc3c7" : "#7f8c8d",
         marginBottom: "20px",
-        textAlign: "center",
+        textAlign: "center" as const,
         fontFamily: "'Playfair Display', serif",
     },
     form: {
         display: "flex",
-        flexDirection: "column",
-        gap: "10px",
+        flexDirection: "column" as const,
+        gap: "15px",
     },
     input: {
-        padding: "10px",
-        borderRadius: "6px",
-        border: "1px solid #555",
-        background: "#444",
-        color: "#fff",
-        fontSize: "15px",
-        outline: "none",
-        fontFamily: "'Playfair Display', serif",
-    },
-    textarea: {
-        padding: "10px",
-        borderRadius: "6px",
-        border: "1px solid #555",
-        background: "#444",
-        color: "#fff",
-        fontSize: "15px",
-        resize: "none",
-        outline: "none",
-        fontFamily: "'Playfair Display', serif",
-    },
-    button: {
-        background: "#1abc9c",
-        color: "#fff",
         padding: "12px",
-        fontSize: "16px",
-        border: "none",
-        borderRadius: "30px",
-        cursor: "pointer",
-        transition: "background 0.3s ease",
+        borderRadius: "8px",
+        border: isDark ? "1px solid #555" : "1px solid #ddd",
+        background: isDark ? "#34495e" : "#f8f9fa",
+        color: isDark ? "#ecf0f1" : "#2c3e50",
+        fontSize: "15px",
+        outline: "none",
         fontFamily: "'Playfair Display', serif",
-        width: "50%",
-        margin: "0 auto",
-        marginTop: "12px",
-    },
+        transition: "all 0.3s ease",
+    } as React.CSSProperties,
+    textarea: {
+        padding: "12px",
+        borderRadius: "8px",
+        border: isDark ? "1px solid #555" : "1px solid #ddd",
+        background: isDark ? "#34495e" : "#f8f9fa",
+        color: isDark ? "#ecf0f1" : "#2c3e50",
+        fontSize: "15px",
+        resize: "vertical" as const,
+        outline: "none",
+        fontFamily: "'Playfair Display', serif",
+        minHeight: "100px",
+        transition: "all 0.3s ease",
+    } as React.CSSProperties,
+    button: {
+        background: isDark ? "#1abc9c" : "#16a085",
+        color: "#ffffff",
+        padding: "12px 24px",
+        fontSize: "16px",
+        fontWeight: "600",
+        border: "none",
+        borderRadius: "8px",
+        cursor: "pointer",
+        transition: "all 0.3s ease",
+        fontFamily: "'Playfair Display', serif",
+        width: "100%",
+        marginTop: "8px",
+    } as React.CSSProperties,
     spinner: {
         width: "16px",
         height: "16px",
-        border: "2px solid #fff",
+        border: "2px solid #ffffff",
         borderTop: "2px solid transparent",
         borderRadius: "50%",
         animation: "spin 1s linear infinite",
-    },    
-
+    } as React.CSSProperties,
     successText: {
-        color: "#4BB543",
-        textAlign: "center",
+        color: "#27ae60",
+        textAlign: "center" as const,
         fontSize: "16px",
-        fontWeight: "bold",
+        fontWeight: "600",
+        marginBottom: "20px",
     },
     successContainer: {
-        textAlign: "center",
+        textAlign: "center" as const,
+        padding: "20px 0",
     },
     tickBounce: {
         fontSize: "50px",
-        color: "#4BB543",
-        marginTop: "10px",
+        color: "#27ae60",
+        marginBottom: "15px",
+        display: "block",
     },
-};
+});
 
 export default Contact;
