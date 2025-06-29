@@ -139,7 +139,7 @@ const CodeSubmissionForm = () => {
             lineNumbers: true,
           }}
         />{" "}
-        <div style={{ marginTop: "20px", marginBottom: "10px" }}>
+        <div>
           <label style={styles.label}>Select Language</label>
           <div style={{ position: "relative" }} ref={dropdownRef}>
             {" "}
@@ -331,7 +331,6 @@ const getStyles = (isDark: boolean) => ({
       ? "linear-gradient(to bottom right, #2c3e50, #34495e)"
       : "linear-gradient(to bottom right, #ecf0f1, #bdc3c7)",
     color: isDark ? "white" : "black",
-    padding: "20px",
   },
   card: {
     width: "100%",
