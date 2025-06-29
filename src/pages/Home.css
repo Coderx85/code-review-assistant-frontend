@@ -1,6 +1,27 @@
 .typewriter-js {
     display: inline;
     color: white;
+    transition: all 0.3s ease-in-out;
+    font-weight: inherit;
+  }
+  
+  /* Dark theme styling */
+  .typewriter-js.dark-theme {
+    color: #ffffff;
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.1),
+      0 0 30px rgba(255, 255, 255, 0.05);
+    animation: darkGlow 2s ease-in-out infinite alternate;
+  }
+  
+  /* Light theme styling */
+  .typewriter-js.light-theme {
+    color: #1f2937;
+    text-shadow: 
+      0 2px 4px rgba(31, 41, 55, 0.2),
+      0 4px 8px rgba(31, 41, 55, 0.1);
+    animation: lightShimmer 3s ease-in-out infinite alternate;
   }
   
   .cursor {
@@ -11,6 +32,27 @@
     background-color: white;
     animation: blinkCursor 1s steps(1) infinite;
     vertical-align: bottom;
+    transition: all 0.3s ease-in-out;
+    border-radius: 1px;
+  }
+  
+  /* Dark theme cursor */
+  .dark-theme .cursor {
+    background-color: #ffffff;
+    box-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.6),
+      0 0 16px rgba(255, 255, 255, 0.3),
+      0 0 24px rgba(255, 255, 255, 0.1);
+    animation: blinkCursor 1s steps(1) infinite, darkCursorGlow 2s ease-in-out infinite alternate;
+  }
+  
+  /* Light theme cursor */
+  .light-theme .cursor {
+    background-color: #1f2937;
+    box-shadow: 
+      0 0 4px rgba(31, 41, 55, 0.4),
+      0 2px 8px rgba(31, 41, 55, 0.2);
+    animation: blinkCursor 1s steps(1) infinite, lightCursorPulse 2.5s ease-in-out infinite alternate;
   }
   
   @keyframes blinkCursor {
@@ -19,6 +61,46 @@
     }
     50% {
       opacity: 1;
+    }
+  }
+  
+  @keyframes darkGlow {
+    0% {
+      filter: brightness(1);
+    }
+    100% {
+      filter: brightness(1.15);
+    }
+  }
+  
+  @keyframes lightShimmer {
+    0% {
+      filter: brightness(0.95) contrast(1);
+    }
+    100% {
+      filter: brightness(1.05) contrast(1.1);
+    }
+  }
+  
+  @keyframes darkCursorGlow {
+    0% {
+      filter: brightness(1);
+      transform: scaleX(1);
+    }
+    100% {
+      filter: brightness(1.3);
+      transform: scaleX(1.2);
+    }
+  }
+  
+  @keyframes lightCursorPulse {
+    0% {
+      filter: brightness(1);
+      transform: scaleY(1);
+    }
+    100% {
+      filter: brightness(0.8);
+      transform: scaleY(1.05);
     }
   }
   
