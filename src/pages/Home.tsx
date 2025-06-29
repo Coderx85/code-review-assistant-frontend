@@ -72,7 +72,7 @@ const getStyles = (isDark: boolean) => ({
   },
   heading: {
     fontSize: "36px",
-    color: isDark ? "#fff" : "#1f2937",
+    color: isDark ? "#000" : "#1f2937",
     marginBottom: "10px",
     paddingBottom: "10px",
     fontWeight: "700",
@@ -130,6 +130,7 @@ const getStyles = (isDark: boolean) => ({
 const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [index, setIndex] = useState(0);
+  const { isDark } = useTheme();
 
   React.useEffect(() => {
     if (index < text.length) {
@@ -142,10 +143,36 @@ const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
     }
   }, [index, text]);
 
+  // Enhanced theme-based styling
+  const getThemeStyles = () => ({
+    color: isDark ? '#ffffff' : '#1f2937',
+    transition: 'all 0.3s ease-in-out',
+    textShadow: isDark 
+      ? '0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.1)' 
+      : '0 2px 4px rgba(31, 41, 55, 0.2)',
+    filter: isDark ? 'brightness(1.1)' : 'brightness(0.95)',
+  });
+
+  const getCursorStyles = () => ({
+    backgroundColor: isDark ? '#ffffff' : '#1f2937',
+    transition: 'all 0.3s ease-in-out',
+    boxShadow: isDark 
+      ? '0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3)' 
+      : '0 0 4px rgba(31, 41, 55, 0.4), 0 2px 8px rgba(31, 41, 55, 0.2)',
+  });
+
   return (
-    <span className="typewriter-js">
+    <span 
+      className={`typewriter-js ${isDark ? 'dark-theme' : 'light-theme'}`}
+      style={getThemeStyles()}
+    >
       {displayedText}
-      <span className="cursor"><pre>  </pre></span>
+      <span 
+        className="cursor"
+        style={getCursorStyles()}
+      >
+        <pre>  </pre>
+      </span>
     </span>
   );
 };
