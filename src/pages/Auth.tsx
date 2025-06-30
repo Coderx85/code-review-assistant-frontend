@@ -4,7 +4,6 @@ import { Eye, EyeOff } from "lucide-react";
 import CodeImage from "../assets/CODE.png";
 import "./Auth.css";
 import { jwtDecode } from "jwt-decode";
-import { useTheme } from "../hook/useTheme";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -15,9 +14,7 @@ const Auth = () => {
   const [shakeEffect, setShakeEffect] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
-  const { isDark } = useTheme();
-  
-  const styles = getStyles(isDark);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +58,7 @@ const Auth = () => {
       setLoading(false);
     }
   };
+
 
 
 
@@ -180,29 +178,23 @@ const Auth = () => {
   );
 };
 
-const getStyles = (isDark: boolean) => ({
+const styles = {
   container: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
     width: "100vw",
-    background: isDark 
-      ? "linear-gradient(to bottom right, #1a1a1a, #2c2c2c)" 
-      : "linear-gradient(to bottom right, #2c3e50, #34495e)",
-    transition: "all 0.3s ease",
+    background: "linear-gradient(to bottom right, #2c3e50, #34495e)",
   },
   authBox: {
-    background: isDark ? "rgb(30, 30, 30)" : "rgb(43, 51, 51)",
+    background: "rgb(43, 51, 51)",
     padding: "20px",
     borderRadius: "10px",
-    boxShadow: isDark 
-      ? "0px 0px 20px rgba(26, 188, 156, 0.3)" 
-      : "0px 0px 20px rgba(0, 255, 150, 0.1)",
+    boxShadow: "0px 0px 20px rgba(0, 255, 150, 0.1)",
     width: "350px",
-    textAlign: "center" as const,
-    border: isDark ? "1px solid #444" : "none",
-    transition: "all 0.3s ease",
+    textAlign: "center" as "center",
+    
   },
   logo: {
     width: "80px",
@@ -217,16 +209,16 @@ const getStyles = (isDark: boolean) => ({
     fontFamily: "'Playfair Display', serif",
   },
   errorText: {
-    color: isDark ? "#ff6b9d" : "#e74c3c",
+    color: "red",
     fontSize: "14px",
     marginBottom: "10px",
   },
   form: {
     display: "flex",
-    flexDirection: "column" as const,
+    flexDirection: "column" as "column",
     gap: "10px",
   },
-    input: {
+  input: {
     padding: "10px",
     fontSize: "16px",
     border: "1px solid #ccc",
@@ -239,7 +231,7 @@ const getStyles = (isDark: boolean) => ({
   passwordContainer: {
     display: "flex",
     alignItems: "center",
-    position: "relative" as const,
+    position: "relative" as "relative",
   },
   passwordInput: {
     flex: 1,
@@ -254,7 +246,7 @@ const getStyles = (isDark: boolean) => ({
     transition: "box-shadow 0.3s ease",
   },
   eyeButton: {
-    position: "absolute" as const,
+    position: "absolute" as "absolute",
     right: "-5px",
     background: "transparent",
     border: "none",
@@ -265,7 +257,7 @@ const getStyles = (isDark: boolean) => ({
     outline: 0,
   },
   button: {
-    background: isDark ? "#1abc9c" : "#16a085",
+    background: "#1abc9c",
     color: "#fff",
     padding: "10px",
     fontSize: "16px",
@@ -281,14 +273,13 @@ const getStyles = (isDark: boolean) => ({
   toggleText: {
     marginTop: "10px",
     fontSize: "14px",
-    color: isDark ? "#b3b3b3" : "#666",
+    color: "#666",
   },
   toggleLink: {
     color: "#1abc9c",
     cursor: "pointer",
     marginLeft: "5px",
-    transition: "color 0.3s ease",
   },
-});
+};
 
 export default Auth;
